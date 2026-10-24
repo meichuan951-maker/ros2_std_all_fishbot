@@ -1,0 +1,10 @@
+build/
+install/
+log/
+*.pyc
+__pycache__/
+.colcon/
+IUIPerro
+IUIPerro.pub
+*.png
+

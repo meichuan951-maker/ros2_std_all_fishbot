@@ -1,0 +1,46 @@
+# ROS / colcon / catkin build output
+build/
+install/
+log/
+devel/
+.colcon/
+.catkin_tools/
+.catkin_workspace
+
+# Python and PlatformIO caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+.pio/
+
+# Local editor and assistant settings
+.vscode/
+.vscode.zip
+.idea/
+.agents/
+.codex/
+.aws/
+
+# Credentials and machine-local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+/chapt7/chapt7_ws/IUIPerro
+/chapt7/chapt7_ws/IUIPerro.pub
+
+# Compiled objects and temporary files
+*.o
+*.a
+*.so
+*.so.*
+*.out
+*~
+.DS_Store
+/chapt2/ros2_cpp_node

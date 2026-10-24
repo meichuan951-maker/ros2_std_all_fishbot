@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- 机器人的IMU部件,惯性测量传感器 -->
+  <xacro:macro name="imu_xacro" params="xyz">
+    <link name="imu_link">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.06 0.06 0.06"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1.0 0.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.06 0.06 0.06"/>
+        </geometry>
+      </collision>
+      <xacro:box_inertial mass="0.05" x="0.06" y="0.06" z="0.06"/>
+    </link>
+    <!-- 机器人的关节部件,用于组合机器人 -->
+    <joint name="imu_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="imu_link"/>
+      <origin xyz="${xyz}" rpy="0.0 0.0 0.0"/>
+    </joint>
+  </xacro:macro>
+
+</robot>

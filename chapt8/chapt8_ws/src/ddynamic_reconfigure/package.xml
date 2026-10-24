@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>ddynamic_reconfigure</name>
+  <version>1.2.1</version>
+  <description>The ddynamic_reconfigure package</description>
+
+  <author email="hilario.tome@pal-robotics.com">Hilario Tome</author>
+  <author email="luca.marchionni@pal-robotics.com">Luca Marchionni</author>
+
+  <maintainer email="rein.appeldoorn@lowpad.com">Rein Appeldoorn</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

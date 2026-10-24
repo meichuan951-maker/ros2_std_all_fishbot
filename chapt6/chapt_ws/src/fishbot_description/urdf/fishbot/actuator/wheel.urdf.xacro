@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- 机器人的轮子部件 -->
+  <xacro:macro name="wheel_xacro" params="wheel_name xyz">
+    <link name="${wheel_name}_link">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="1.57079 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.032" length="0.02"/>
+        </geometry>
+        <material name="red">
+          <color rgba="1.0 0.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="1.57079 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="0.032" length="0.02"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertial mass="1.0" radius="0.032" length="0.02" rpy="1.57079 0.0 0.0"/>
+    </link>
+    <!-- Gazebo 差速插件需要可转动关节 -->
+    <joint name="${wheel_name}_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${wheel_name}_link"/>
+      <origin xyz="${xyz}" rpy="0.0 0.0 0.0"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+    <gazebo reference="${wheel_name}_link">
+      <material>Gazebo/Red</material>
+      <mu1>20.0</mu1>
+      <mu2>20.0</mu2>
+      <kp>10000000.0</kp>
+      <kd>1.0</kd>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

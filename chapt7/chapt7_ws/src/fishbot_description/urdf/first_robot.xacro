@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="first_robot">
+
+  <xacro:include filename="fishbot/common_inertial.xacro"/>
+
+  <xacro:property name="base_radius" value="0.25"/>
+  <xacro:property name="base_length" value="0.2"/>
+  <xacro:property name="imu_size" value="0.02"/>
+
+  <!-- 机器人的身体部分 -->
+  <xacro:macro name="base_link" params="radius length">
+    <link name="base_link">
+      <!-- 部件的外观描述 -->
+      <visual>
+        <!-- 沿着几何中心的偏移和旋转量 -->
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <!-- 形状的几何描述 -->
+        <geometry>
+          <!-- 圆柱体 ,半径,高度 -->
+          <cylinder radius="${radius}" length="${length}"/>
+        </geometry>
+        <!-- 形状的材质描述 -->
+        <material name="white">
+          <color rgba="1.0 1.0 1.0 0.5"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length}"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertial mass="1.0" radius="${radius}" length="${length}" rpy="0.0 0.0 0.0"/>
+    </link>
+  </xacro:macro>
+
+  <!-- 机器人的IMU部件,惯性测量传感器 -->
+  <xacro:macro name="imu_link" params="imu_name xyz">
+    <link name="${imu_name}_link">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="${imu_size} ${imu_size} ${imu_size}"/>
+        </geometry>
+        <material name="black">
+          <color rgba="0.0 0.0 0.0 0.5"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="${imu_size} ${imu_size} ${imu_size}"/>
+        </geometry>
+      </collision>
+      <xacro:box_inertial mass="0.01" x="${imu_size}" y="${imu_size}" z="${imu_size}"/>
+    </link>
+    <!-- 机器人的关节部件,用于组合机器人 -->
+    <joint name="${imu_name}_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="${imu_name}_link"/>
+      <origin xyz="${xyz}" rpy="0.0 0.0 0.0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:base_link radius="0.12" length="0.1"/>
+  <xacro:imu_link imu_name="imu_up" xyz="0.0 0.0 0.04"/>
+  <xacro:imu_link imu_name="imu_down" xyz="0.0 0.0 -0.04"/>
+
+</robot>

@@ -1,0 +1,20 @@
+# Colcon workspace artifacts
+build/
+install/
+log/
+
+# Nested empty git repo
+src/ros2_stduy/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# Secrets
+.env
+.env.*

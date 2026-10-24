@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="base_radius" value="0.25"/>
+  <xacro:property name="base_length" value="0.2"/>
+  <xacro:property name="imu_size" value="0.02"/>
+  <xacro:property name="base_footprint_z" value="0.0"/>
+
+  <link name="base_footprint"/>
+
+  <!-- 机器人的身体部分 -->
+  <xacro:macro name="base_xacro" params="radius length">
+    <link name="base_link">
+      <!-- 部件的外观描述 -->
+      <visual>
+        <!-- 沿着几何中心的偏移和旋转量 -->
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <!-- 形状的几何描述 -->
+        <geometry>
+          <!-- 圆柱体 ,半径,高度 -->
+          <cylinder radius="${radius}" length="${length}"/>
+        </geometry>
+        <!-- 形状的材质描述 -->
+        <material name="white">
+          <color rgba="1.0 1.0 1.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="${radius}" length="${length}"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertial mass="15.0" radius="${radius}" length="${length}" rpy="0.0 0.0 0.0"/>
+    </link>
+    <joint name="base_footprint_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin xyz="0.0 0.0 ${length/2 + 0.02}" rpy="0.0 0.0 0.0"/>
+    </joint>
+  </xacro:macro>
+
+</robot>

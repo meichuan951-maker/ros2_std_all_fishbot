@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- 机器人的摄像头部件 -->
+  <xacro:macro name="camera_xacro" params="xyz">
+    <link name="camera_link">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.06 0.06 0.06"/>
+        </geometry>
+        <material name="green">
+          <color rgba="0.0 1.0 0.0 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="0.06 0.06 0.06"/>
+        </geometry>
+      </collision>
+      <xacro:box_inertial mass="0.05" x="0.06" y="0.06" z="0.06"/>
+    </link>
+
+    <link name="camera_optical_link"/>
+
+    <joint name="camera_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="camera_link"/>
+      <origin xyz="${xyz}" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+    <joint name="camera_optical_joint" type="fixed">
+      <parent link="camera_link"/>
+      <child link="camera_optical_link"/>
+      <origin xyz="0 0 0" rpy="-1.5708 0 -1.5708"/>
+    </joint>
+  </xacro:macro>
+
+</robot>

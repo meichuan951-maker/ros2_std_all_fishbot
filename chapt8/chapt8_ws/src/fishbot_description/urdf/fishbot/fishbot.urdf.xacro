@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fishbot">
+
+  <xacro:include filename="common_inertial.xacro"/>
+
+  <!-- 机器人的主体部件 -->
+  <xacro:include filename="base.urdf.xacro"/>
+
+  <!-- 传感器部件 -->
+  <xacro:include filename="sensor/imu.urdf.xacro"/>
+  <xacro:include filename="sensor/camera.urdf.xacro"/>
+  <xacro:include filename="sensor/laser.urdf.xacro"/>
+
+  <!-- 执行器部件 -->
+  <xacro:include filename="actuator/wheel.urdf.xacro"/>
+  <xacro:include filename="actuator/caster.urdf.xacro"/>
+  <!-- 插件 -->
+  <!-- <xacro:include filename="plugins/gazebo_control_plugin.xacro"/> -->
+  <xacro:include filename="plugins/gazebo_sensor_plugin.xacro"/>
+  <xacro:include filename="fishbot.ros2_control.xacro"/>
+  
+
+  <!-- 尺寸参数 -->
+  <xacro:property name="base_r" value="0.09"/>
+  <xacro:property name="base_l" value="0.18"/>
+  <xacro:property name="wheel_radius" value="0.032"/>
+  <xacro:property name="wheel_length" value="0.02"/>
+  <xacro:property name="caster_radius" value="0.032"/>
+
+  <!-- 轮子着地，底盘底部留 2cm 离地间隙 -->
+  <xacro:property name="ground_z" value="${-base_l/2 - 0.02}"/>
+  <xacro:property name="wheel_z" value="${ground_z + wheel_radius}"/>
+  <xacro:property name="caster_z" value="${ground_z + caster_radius}"/>
+
+  <!-- 驱动轮贴在底盘外侧，万向轮放在前后边缘 -->
+  <xacro:property name="wheel_y" value="${base_r + wheel_length/2}"/>
+  <xacro:property name="caster_x" value="${base_r - caster_radius}"/>
+
+  <!-- 实例化各部件 -->
+  <xacro:base_xacro length="${base_l}" radius="${base_r}"/>
+  <xacro:imu_xacro xyz="0.0 0.0 0.02"/>
+  <xacro:camera_xacro xyz="0.10 0.0 0.075"/>
+  <xacro:laser_xacro xyz="0.0 0.0 0.10"/>
+  <xacro:wheel_xacro wheel_name="left_wheel" xyz="0.0 ${wheel_y} ${wheel_z}"/>
+  <xacro:wheel_xacro wheel_name="right_wheel" xyz="0.0 ${-wheel_y} ${wheel_z}"/>
+  <xacro:caster_xacro caster_name="front_caster" xyz="${caster_x} 0.0 ${caster_z}"/>
+  <xacro:caster_xacro caster_name="rear_caster" xyz="${-caster_x} 0.0 ${caster_z}"/>
+
+  <!-- <xacro:gazebo_control_plugin/> -->
+  <xacro:gazebo_sensor_plugin/>
+  <xacro:fishbot_ros2_control/>
+
+</robot>
